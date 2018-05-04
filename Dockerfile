@@ -31,13 +31,6 @@ ENV BLAS /app/.heroku/vendor/lib/libcblas.a
 ENV LAPACK /app/.heroku/vendor/lib/liblapack.a
 
 
-# Install Python 2.7.10
-#RUN apt-get remove -y python2.7
-#RUN apt-get remove -y python3.4
-#RUN apt-get remove -y python2.7-minimal
-#RUN apt-get remove -y python3.4-minimal
-#RUN apt-get remove -y libpython2.7-minimal
-#RUN apt-get remove -y libpython3.4-minimal
 
 RUN curl -s -L http://kent.dl.sourceforge.net/project/tcl/Tcl/8.6.6/tcl8.6.6-src.tar.gz > tcl8.6.6-src.tar.gz
 RUN tar -xvf tcl8.6.6-src.tar.gz
@@ -56,17 +49,6 @@ WORKDIR /app/.heroku/
 RUN rm -r tcl8.6.6
 RUN rm -r tk8.6.6
 
-
-RUN curl -s -L https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz > Python-3.6.4.tgz
-RUN tar zxvf Python-3.6.4.tgz
-RUN rm Python-3.6.4.tgz
-WORKDIR /app/.heroku/Python-3.6.4
-RUN ./configure --prefix=/app/.heroku/vendor/ --enable-shared --with-tcltk-includes="-I/app/.heroku/vendor/include" --with-tcltk-libs="-L/app/.heroku/vendor/lib -ltcl8.6.6 -L/app/.heroku/vendor/lib -ltk8.6.6"
-RUN make install
-WORKDIR /app/.heroku
-RUN rm -rf Python-3.6.4
-ENV PATH /app/.heroku/vendor/bin:$PATH
-ENV PYTHONPATH /app/.heroku/vendor/lib/python3.6/site-packages
 
 
 # Install latest setup-tools and pip
